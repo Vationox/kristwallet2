@@ -7,16 +7,21 @@ local required = {
 }
 
 if not fs.exists("/.kw") then
-    fs.makeDir("/.kw")
     print("Creating directory")
+    fs.makeDir("/.kw")
 end
 
 for a, b in pairs(required) do
+    print("Downloading "..b)    
     local handle = http.get(down..b)
     local cont = handle.readAll()
     handle.close()
     
+    print("Saving "..b)
     local file = fs.open("/"..b, "w")
     file.write(cont)
     file.close()
 end
+
+local settings = require("/.kw/settings.lua")
+print(settings.node)
